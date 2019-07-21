@@ -2,9 +2,9 @@
   <section class="section">
     <div class="columns is-mobile">
       <card title="Free" icon="github-circle">
-        {{ping}}
+        {{ ping }}
         <input v-model="str" />
-        <button @click="echo">{{echoStr||'click me'}}</button>
+        <button @click="echo">{{ echoStr || 'click me' }}</button>
         <a href="https://github.com/buefy/buefy">GitHub</a>
       </card>
 
@@ -25,50 +25,42 @@
   </section>
 </template>
 
-<script>
-import Card from "~/components/Card";
-import pingGql from "../gql/ping";
-import gql from "graphql-tag";
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import Card from '../components/Card.vue';
+// import pingGql from '../gql/ping';
+import gql from 'graphql-tag';
+import 'vue-apollo';
 
-export default {
-  name: "HomePage",
-
-  components: {
-    Card
-  },
-
-  data() {
-    return {
-      str: undefined,
-      echoStr: undefined
-    };
-  },
-
-  apollo: {
+@Component({  components: { Card }, apollo: {
     ping: gql`
       query {
         ping
       }
-    `
-  },
-  methods: {
-    async echo() {
-      // Call to the graphql mutation
-      this.echoStr = await this.$apollo.mutate({
-        // Query
-        mutation: gql`
+    `,
+  }})
+export default class HomePage extends Vue {
+  str: string = '';
+  echoStr: string = '';
+  ping!: string;
+
+  async echo() {
+    // Call to the graphql mutation
+    const response = await this.$apollo.mutate({
+      // Query
+      mutation: gql`
           mutation($message: String!) {
             echo(message: $message)
           }
         `,
-        // Parameters
-        variables: {
-          message: this.str
-        }
-      });
-      this.echoStr = this.echoStr.data.echo;
-      console.log(this.echoStr);
-    }
+      // Parameters
+      variables: {
+        message: this.str
+      }
+    });
+    this.echoStr = response.data.echo;
+    console.log(this.echoStr);
   }
+
 };
 </script>

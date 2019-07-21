@@ -1,4 +1,7 @@
-module.exports = {
+import NuxtConfiguration from '@nuxt/config';
+
+const config: NuxtConfiguration = {
+  // Type or Press `Ctrl + Space` for autocompletion
   mode: 'universal',
   /*
    ** Headers of the page
@@ -49,7 +52,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    // extend(config, ctx) {},
   },
 
   apollo: {
@@ -90,4 +93,6 @@ module.exports = {
       test2: '~/plugins/my-alternative-apollo-config.js',
     },
   },
-}
+};
+
+export default config;
