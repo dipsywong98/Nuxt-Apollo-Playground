@@ -1,0 +1,3 @@
+mutation($message: String!) {
+  echo(message: $message)
+}

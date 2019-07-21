@@ -20,7 +20,10 @@
         <a href="http://bulma.io/">Bulma</a>
       </card>
 
-      <card title="Lightweight" icon="arrange-bring-to-front">No other internal dependency</card>
+      <card title="Lightweight" icon="arrange-bring-to-front">
+        <EchoQuery :message="str" />
+      </card>
+      <EchoMutate />
     </div>
   </section>
 </template>
@@ -28,11 +31,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Card from '../components/Card.vue';
-// import pingGql from '../gql/ping';
+import EchoMutate from '../components/EchoMutate.vue';
+import EchoQuery from '../components/EchoQuery.vue';
 import gql from 'graphql-tag';
 import 'vue-apollo';
 
-@Component({  components: { Card }, apollo: {
+@Component({  components: { Card, EchoMutate, EchoQuery }, apollo: {
     ping: gql`
       query {
         ping
